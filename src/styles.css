@@ -44,8 +44,10 @@
   --accent-soft: #f5e8ec;
 }
 :root[data-theme="dark"][data-accent="talvios"] {
-  --accent: #c05a73;
-  --accent-soft: #3a2029;
+  /* Lightened from #c05a73 (4.15:1) so it clears AA against the page, and the
+     soft tint darkened so the tag that sits on it clears AA too. */
+  --accent: #c96a80;
+  --accent-soft: #2e181f;
 }
 
 :root[data-accent="evergreen"] {

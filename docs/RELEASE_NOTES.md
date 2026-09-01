@@ -49,9 +49,6 @@ under the 4.5:1 threshold. Dark accents are lightened for visibility against the
 background, which is exactly what makes white sit badly on them. Fix is to use
 the text token instead of white in dark mode.
 
-**Talvios burgundy fails AA in dark mode as text**, at 4.15:1 against `#191919`.
-The other four accents pass in both grounds.
-
 **Mobile previews are thumbnails.** They keep the desktop proportions and stay
 readable, but at 324px the tiles are small. A horizontally scrollable canvas at
 a larger reference width is the likely next step.

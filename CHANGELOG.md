@@ -30,6 +30,14 @@ announced but not implemented.
 - Floating dock navigation on mobile, replacing the header nav below 760px.
 - Hand rolled router with `vercel.json` rewrites for deep links.
 
+### Fixed (post 1.0.0 build)
+
+- Talvios burgundy failed AA in dark mode. The accent was 4.15:1 against the
+  page and its soft tint 3.49:1 behind the tag that sits on it. Lightened the
+  accent to `#c96a80` and darkened the tint to `#2e181f`, giving 4.90:1 and
+  4.62:1. Light mode is unchanged. All five accents now clear AA in both
+  grounds.
+
 ### Added (post 1.0.0 build)
 
 - Static prerendering of all ten routes at build time, using `react-dom/server`
