@@ -2,11 +2,11 @@
 
 ## v1.0.0 — 1 September 2026
 
-The first build of Layouts.
+The first build of Layoutss.
 
 ### What it does
 
-Layouts is a free library of dashboard designs. You pick a grid that matches
+Layoutss is a free library of dashboard designs. You pick a grid that matches
 what you are building, preview it in any of six palettes, and copy the hex codes
 straight into Power BI, Tableau, Excel or your own code. No account, nothing to
 pay for.
@@ -38,8 +38,15 @@ browser and never reaches the server.
 
 **Accounts.** Nothing to sign in to yet. Sign in opens a coming soon dialog.
 
+**No email capture.** The mailing list form was removed, so there is currently
+no way to collect interest ahead of AI assist launching.
+
 **Exports.** Palettes copy as hex. The Power BI theme JSON, Tableau `.tps` and
 Excel `.thmx` files are not generated yet.
+
+### Live at
+
+<https://layoutss.vercel.app>
 
 ### Known issues
 
@@ -52,11 +59,6 @@ the text token instead of white in dark mode.
 **Mobile previews are thumbnails.** They keep the desktop proportions and stay
 readable, but at 324px the tiles are small. A horizontally scrollable canvas at
 a larger reference width is the likely next step.
-
-**SITE_URL is a placeholder.** `src/data/seo.ts` points at
-`https://layouts.vercel.app`. Canonical tags, Open Graph URLs and the sitemap
-are absolute, so this must be set to the real domain before launch or social
-previews and canonicals will point at the wrong host.
 
 ### Numbers
 

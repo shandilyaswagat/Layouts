@@ -10,7 +10,7 @@ export function AboutPage({ navigate }: { navigate: (to: string) => void }) {
         </Link>
         <h1>About</h1>
         <p>
-          Layouts is a free library of dashboard designs. It is made by Talvios, a
+          Layoutss is a free library of dashboard designs. It is made by Talvios, a
           one-person project building practical tools for people doing unglamorous work.
         </p>
       </section>
@@ -54,7 +54,7 @@ export function AboutPage({ navigate }: { navigate: (to: string) => void }) {
             to use them.
           </p>
           <p>
-            Layouts is a little different because a design library is more useful when
+            Layoutss is a little different because a design library is more useful when
             you can simply open it and browse. The same principle still applies: keep
             things simple, collect only what is necessary, and make the useful part
             accessible.
@@ -81,7 +81,7 @@ export function AboutPage({ navigate }: { navigate: (to: string) => void }) {
             process clearer and easier to manage.
           </p>
           <p>
-            Layouts came from the same idea. I’d spent enough time starting dashboards
+            Layoutss came from the same idea. I’d spent enough time starting dashboards
             from a blank canvas, figuring out what belonged where and which colours
             worked together. I wanted a clear starting point, so I built one.
           </p>

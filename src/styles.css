@@ -1,5 +1,5 @@
 /* ============================================================
-   Layouts. Tokens and styles transcribed from the design canvas.
+   Layoutss. Tokens and styles transcribed from the design canvas.
    Dark is an explicit choice only, stamped on the root element,
    which is how the design behaves.
    ============================================================ */
@@ -230,9 +230,12 @@ button {
 .brand-mark i:nth-child(3) { opacity: 0.85; }
 
 .brand-name {
-  font-family: "Instrument Serif", Georgia, serif;
-  font-size: 20px;
-  letter-spacing: -0.005em;
+  /* Matches the Washrooms wordmark: the system serif stack rather than a web
+     font, so it resolves to New York on Apple platforms and Georgia elsewhere. */
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: -0.5px;
   line-height: 1;
 }
 
@@ -838,35 +841,10 @@ button {
   line-height: 1.6;
   color: var(--muted);
 }
-.cta form {
-  margin: 30px auto 0;
-  max-width: 420px;
+.cta-actions {
+  margin-top: 30px;
   display: flex;
-  gap: 8px;
-}
-.cta input {
-  flex: 1;
-  height: 46px;
-  padding: 0 14px;
-  border: 1px solid var(--border);
-  background: var(--card);
-  color: var(--text);
-  border-radius: 9px;
-  font: inherit;
-  font-size: 15px;
-  outline: none;
-}
-.cta input:focus { border-color: var(--muted); }
-.cta button {
-  height: 46px;
-  padding: 0 20px;
-  border: none;
-  background: var(--text);
-  color: var(--bg);
-  border-radius: 9px;
-  font-size: 15px;
-  font-weight: 500;
-  cursor: pointer;
+  justify-content: center;
 }
 
 /* ---------- footer ---------- */
@@ -1166,7 +1144,6 @@ button {
   .ai-wrap { margin-top: 72px; }
   .cta { padding-top: 80px; }
   .cta h2 { font-size: 30px; }
-  .cta form { flex-direction: column; }
   .swatches button { max-height: 52px; border-radius: 7px; }
   .hexes { gap: 5px; font-size: 8.5px; }
   .palette-card { padding: 16px; }

@@ -23,12 +23,21 @@ announced but not implemented.
   donuts, tables, filter rails, all with dummy values, framed in window chrome.
 - Six palettes of six colours each, click any swatch to copy its hex.
 - AI assist page at `/ai-assist`, marked coming soon.
-- About page at `/about` covering Layouts and the rest of the Talvios shelf.
+- About page at `/about` covering Layoutss and the rest of the Talvios shelf.
 - Five accent themes cycled by clicking the brand mark: Steel blue (default),
   Talvios burgundy, Muted evergreen, Dusty plum, Terracotta.
 - Light and dark grounds, chosen explicitly and stored per browser.
 - Floating dock navigation on mobile, replacing the header nav below 760px.
 - Hand rolled router with `vercel.json` rewrites for deep links.
+
+### Changed (post 1.0.0 build)
+
+- Removed the email capture form. The section now links straight to the
+  library, and everything that pointed at the form was repointed: the AI assist
+  page, the About page and the footer's Contact link.
+- Header wordmark reads Layoutss and uses the system serif stack at weight 700,
+  matching the Washrooms wordmark.
+- `SITE_URL` set to the live domain, `https://layoutss.vercel.app`.
 
 ### Fixed (post 1.0.0 build)
 

@@ -25,7 +25,7 @@ export function Header({ navigate, flash, onSignIn }: Props) {
             <i />
             <i />
           </button>
-          <Link to="/" navigate={navigate} className="brand-name">Layouts</Link>
+          <Link to="/" navigate={navigate} className="brand-name">Layoutss</Link>
         </div>
 
         <nav className="header-nav">

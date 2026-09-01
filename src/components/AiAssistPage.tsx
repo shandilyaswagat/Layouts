@@ -22,11 +22,11 @@ export function AiAssistPage({ navigate }: { navigate: (to: string) => void }) {
       </ul>
 
       <div className="hero-actions" style={{ marginTop: 34 }}>
-        <Link to="/#cta" navigate={navigate} className="btn-solid">
-          Get early access
-        </Link>
-        <Link to="/layouts" navigate={navigate} className="btn-quiet">
+        <Link to="/layouts" navigate={navigate} className="btn-solid">
           Browse the library
+        </Link>
+        <Link to="/" navigate={navigate} className="btn-quiet">
+          Back home
         </Link>
       </div>
     </section>

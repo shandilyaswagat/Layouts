@@ -1,12 +1,6 @@
-import type { FormEvent } from "react";
+import { Link } from "./Link";
 
-export function Cta({ onJoin }: { onJoin: () => void }) {
-  function submit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    e.currentTarget.reset();
-    onJoin();
-  }
-
+export function Cta({ navigate }: { navigate: (to: string) => void }) {
   return (
     <section id="cta" className="shell cta">
       <h2 className="reveal">
@@ -15,12 +9,13 @@ export function Cta({ onJoin }: { onJoin: () => void }) {
         from a blank page.
       </h2>
       <p className="reveal">
-        Browse the library free. Early access to AI assist opens this autumn.
+        Browse the library free. AI assist opens this autumn.
       </p>
-      <form className="reveal" onSubmit={submit}>
-        <input type="email" required placeholder="you@company.com" aria-label="Email address" />
-        <button type="submit">Get early access</button>
-      </form>
+      <div className="reveal cta-actions">
+        <Link to="/layouts" navigate={navigate} className="btn-solid">
+          Explore the library
+        </Link>
+      </div>
     </section>
   );
 }

@@ -102,7 +102,7 @@ export default function App({ initialPath }: { initialPath?: string } = {}) {
           <Layouts onOpen={openLayout} navigate={navigate} />
           <Palettes onCopy={copy} navigate={navigate} />
           <AiAssist />
-          <Cta onJoin={() => flash("you are on the list")} />
+          <Cta navigate={navigate} />
         </>
       )}
 

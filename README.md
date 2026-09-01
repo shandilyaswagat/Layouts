@@ -1,4 +1,6 @@
-# Layouts
+# Layoutss
+
+<https://layoutss.vercel.app>
 
 A free library of dashboard layouts, mockups and palettes with copy-ready hex
 codes. Built for people who have to make a dashboard in Power BI, Tableau, Excel
@@ -104,7 +106,7 @@ design already uses the hash for in-page anchors.
 | `/layouts` | The full library, with platform filters |
 | `/layouts/<id>` | One layout, full page |
 | `/ai-assist` | Coming soon |
-| `/about` | About Layouts and Talvios |
+| `/about` | About Layoutss and Talvios |
 
 `vercel.json` rewrites everything to `index.html`, so deep links survive a hard
 refresh. Any static host needs the same rule.
@@ -129,9 +131,10 @@ deletes the SSR bundle.
 React still takes over on load, so behaviour is identical. Ten routes are
 prerendered: the four pages plus one per layout.
 
-**Set `SITE_URL` in `src/data/seo.ts` before launch.** Canonical tags, Open
-Graph URLs and the sitemap are all absolute, so a wrong value there means broken
-social previews and canonicals pointing at the wrong host.
+**`SITE_URL` in `src/data/seo.ts` must match the domain the site is served
+from.** Canonical tags, Open Graph URLs and the sitemap are all absolute, so a
+mismatch means canonicals pointing at a host that does not exist. It is set to
+`https://layoutss.vercel.app`.
 
 Adding a layout to `src/data/layouts.ts` automatically adds its detail page to
 the prerender list and the sitemap. Nothing else to update.

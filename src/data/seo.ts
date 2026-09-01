@@ -2,12 +2,13 @@ import { LAYOUTS } from "./layouts";
 
 /**
  * Production origin, used for canonical URLs, Open Graph and the sitemap.
- * CHANGE THIS before launch. Social scrapers need an absolute URL, so a wrong
- * value here means broken previews even though the site itself works.
+ * These are absolute, so if this does not match the domain the site is served
+ * from, canonicals point somewhere that does not exist and social previews
+ * fail. Update it if the domain ever changes.
  */
-export const SITE_URL = "https://layouts.vercel.app";
+export const SITE_URL = "https://layoutss.vercel.app";
 
-export const SITE_NAME = "Layouts";
+export const SITE_NAME = "Layoutss";
 
 export type Meta = {
   path: string;
@@ -18,34 +19,34 @@ export type Meta = {
 const BASE: Meta[] = [
   {
     path: "/",
-    title: "Layouts · Dashboard layouts, mockups and palettes",
+    title: "Layoutss · Dashboard layouts, mockups and palettes",
     description:
       "A free library of dashboard layouts and palettes with copy-ready hex codes. Build in Power BI, Tableau, Excel or on the web without starting from a blank canvas.",
   },
   {
     path: "/layouts",
-    title: "Dashboard layouts library · Layouts",
+    title: "Dashboard layouts library · Layoutss",
     description:
       "Every grid in the library, with spacing and tile sizes worked out. Filter by Power BI, Tableau, Excel or web, and preview each one in six palettes.",
   },
   {
     path: "/ai-assist",
-    title: "AI assist, coming soon · Layouts",
+    title: "AI assist, coming soon · Layoutss",
     description:
       "Describe what you are measuring and who reads it. The assistant picks a layout, suggests a palette and explains which chart belongs in each slot.",
   },
   {
     path: "/about",
-    title: "About Layouts and Talvios",
+    title: "About Layoutss and Talvios",
     description:
-      "Layouts is a free dashboard design library made by Talvios, a one-person project building practical tools. No account, no tracking, nothing to pay for.",
+      "Layoutss is a free dashboard design library made by Talvios, a one-person project building practical tools. No account, no tracking, nothing to pay for.",
   },
 ];
 
 /** One entry per layout, so each detail page is indexable on its own terms. */
 const DETAIL: Meta[] = LAYOUTS.map((l) => ({
   path: `/layouts/${l.id}`,
-  title: `${l.name} dashboard layout · Layouts`,
+  title: `${l.name} dashboard layout · Layoutss`,
   description: `${l.desc} A ready made ${l.name.toLowerCase()} grid for ${l.platforms.join(
     " and ",
   )}, with spacing, tile sizes and six palettes to preview it in.`,
@@ -55,7 +56,7 @@ export const ROUTES: Meta[] = [...BASE, ...DETAIL];
 
 const FALLBACK: Meta = {
   path: "/404",
-  title: "Page not found · Layouts",
+  title: "Page not found · Layoutss",
   description: "That link does not point at anything in the library.",
 };
 
