@@ -1,0 +1,19 @@
+node_modules
+dist
+*.tsbuildinfo
+
+.DS_Store
+*.local
+.env
+.env.*
+!.env.example
+
+# Editor and tooling config
+.vscode/
+.idea/
+.*/
+!.github/
+
+# Internal design sources and planning docs, not part of the product
+/Dashboards by*/
+brief/

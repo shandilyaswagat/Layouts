@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Layouts</title>
+    <meta
+      name="description"
+      content="A growing library of simple, functional dashboard designs with copy-ready hex codes. Build in Power BI, Excel or on the web without starting from a blank canvas."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Layouts" />
+    <meta
+      property="og:description"
+      content="A free library of dashboard layouts and palettes with copy-ready hex codes. Build in Power BI, Tableau, Excel or on the web."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#397baf" />
+    <!--app-head-->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      // Applies the saved theme before first paint, or a dark reload flashes white.
+      try {
+        var r = document.documentElement;
+        if (localStorage.getItem("gl-theme") === "dark") r.setAttribute("data-theme", "dark");
+        var a = localStorage.getItem("gl-accent");
+        if (a) r.setAttribute("data-accent", a);
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"><!--app-html--></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
