@@ -62,10 +62,12 @@ for (const meta of ROUTES) {
     `<link rel="canonical" href="${url}" />`,
     `<meta property="og:url" content="${url}" />`,
     `<meta property="og:site_name" content="${SITE_NAME}" />`,
+    `<meta property="og:image" content="${SITE_URL}/og.png" />`,
     `<script type="application/ld+json">${jsonLd(meta, url)}</script>`,
   ].join("\n    ");
 
   const html = template
+    .replace(/<meta\s+property="og:image"\s+content="[^"]*"\s*\/>\n\s*/, "")
     .replace(/<title>[\s\S]*?<\/title>/, `<title>${escape(meta.title)}</title>`)
     .replace(
       /<meta\s+name="description"[\s\S]*?\/>/,
