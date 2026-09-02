@@ -108,8 +108,12 @@ design already uses the hash for in-page anchors.
 | `/ai-assist` | Coming soon |
 | `/about` | About Layoutss and Talvios |
 
-`vercel.json` rewrites everything to `index.html`, so deep links survive a hard
-refresh. Any static host needs the same rule.
+Every route above is prerendered to its own HTML file, so deep links survive a
+hard refresh without a catch-all rewrite. Anything that is not a prerendered
+file falls through to `404.html`, which Vercel serves with a real 404 status.
+
+That means **a new route has to be added to `ROUTES` in `src/data/seo.ts`**, or
+it will 404 in production even though it works in dev.
 
 Below 760px, opening a layout navigates to `/layouts/<id>`. Above it, the same
 click opens a modal. Both render the identical preview.

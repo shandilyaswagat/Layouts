@@ -1,0 +1,13 @@
+{
+  "name": "Layoutss",
+  "short_name": "Layoutss",
+  "description": "A free library of dashboard layouts and palettes for Power BI, Tableau, Excel and the web.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#397baf",
+  "icons": [
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}

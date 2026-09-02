@@ -1,7 +1,7 @@
 import { renderToString } from "react-dom/server";
 import App from "./App";
 
-export { ROUTES, SITE_URL, SITE_NAME } from "./data/seo";
+export { ROUTES, SITE_URL, SITE_NAME, LAYOUT_ITEMS, AUTHOR } from "./data/seo";
 
 /** Renders one route to static HTML for the prerender step. */
 export function render(path: string) {
