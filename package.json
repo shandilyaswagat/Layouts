@@ -1,8 +1,9 @@
 {
   "name": "layoutss",
   "version": "1.0.0",
+  "private": true,
   "description": "A free library of dashboard layouts and palettes for Power BI, Tableau, Excel and the web.",
-  "license": "MIT",
+  "license": "UNLICENSED",
   "author": "Swagat Shandilya",
   "type": "module",
   "scripts": {

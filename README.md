@@ -167,4 +167,9 @@ and unreadable. On desktop no floor ever binds.
 
 ## Licence
 
-MIT. See [LICENSE](LICENSE).
+None. All rights reserved.
+
+The source carries no licence, so the default applies: you may read it, but
+copying, modifying, redistributing and reusing it are not permitted without
+written permission. The dashboard layouts and palettes published on the site
+are free to use in your own work. That is the product. This repository is not.
