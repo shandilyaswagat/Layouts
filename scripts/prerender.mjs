@@ -62,12 +62,20 @@ for (const meta of ROUTES) {
     `<link rel="canonical" href="${url}" />`,
     `<meta property="og:url" content="${url}" />`,
     `<meta property="og:site_name" content="${SITE_NAME}" />`,
+    // og:image must come before its own structured properties. A parser
+    // attaches width, height and alt to the last image it has seen, so
+    // listing them first orphans them. iMessage drops the card entirely.
     `<meta property="og:image" content="${SITE_URL}/og.png" />`,
+    `<meta property="og:image:type" content="image/png" />`,
+    `<meta property="og:image:width" content="1200" />`,
+    `<meta property="og:image:height" content="630" />`,
+    `<meta property="og:image:alt" content="${escape(meta.title)}" />`,
+    `<meta name="twitter:image" content="${SITE_URL}/og.png" />`,
     `<script type="application/ld+json">${jsonLd(meta, url)}</script>`,
   ].join("\n    ");
 
   const html = template
-    .replace(/<meta\s+property="og:image"\s+content="[^"]*"\s*\/>\n\s*/, "")
+    .replace(/[ \t]*<meta\s+(?:property|name)="(?:og|twitter):image[^"]*"[^>]*\/>\n/g, "")
     .replace(/<title>[\s\S]*?<\/title>/, `<title>${escape(meta.title)}</title>`)
     .replace(
       /<meta\s+name="description"[\s\S]*?\/>/,
