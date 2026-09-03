@@ -62,3 +62,27 @@ export function useTheme() {
 
   return { dark, accent, accentName: ACCENTS[accent].name, toggle, cycleAccent };
 }
+
+/**
+ * Whether the dark ground is active, for anything that has to pick a colour
+ * rather than name a token. Charts need it: half a palette falls below the
+ * contrast floor on a dark card, so the usable series differ by ground.
+ *
+ * Starts light so the prerendered markup is deterministic, then corrects on
+ * mount and follows the root attribute after that.
+ */
+export function useIsDark() {
+  const [dark, setDark] = useState(false);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const read = () => setDark(root.getAttribute("data-theme") === "dark");
+    read();
+
+    const mo = new MutationObserver(read);
+    mo.observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => mo.disconnect();
+  }, []);
+
+  return dark;
+}

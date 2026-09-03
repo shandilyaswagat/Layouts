@@ -37,7 +37,7 @@ export function LayoutDetailPage({
       </div>
 
       <div className="detail-preview">
-        <PreviewFrame layout={layout} colors={palette.colors} />
+        <PreviewFrame layout={layout} palette={palette} />
       </div>
 
       <h2 className="detail-h2">Palette</h2>

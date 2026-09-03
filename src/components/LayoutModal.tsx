@@ -42,7 +42,7 @@ export function LayoutModal({ layout, paletteIndex, onPalette, onClose, onCopy }
         </div>
 
         <div className="modal-preview-wrap">
-          <PreviewFrame layout={layout} colors={palette.colors} />
+          <PreviewFrame layout={layout} palette={palette} />
         </div>
 
         <div className="modal-foot">

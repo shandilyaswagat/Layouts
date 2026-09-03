@@ -15,6 +15,10 @@
   --accent: #397baf;
   --accent-soft: #e8f1f6;
   --shadow: 0 1px 2px rgba(15, 15, 15, 0.06), 0 8px 28px rgba(15, 15, 15, 0.06);
+  /* Reserved states. Never a series colour, and never reused as one. */
+  --ok: #2f7d54;
+  --warn: #8a6206;
+  --bad: #a3352f;
   --shell: 1120px;
   --gutter: 28px;
 }
@@ -30,6 +34,9 @@
   --accent: #72aad0;
   --accent-soft: #25343d;
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 28px rgba(0, 0, 0, 0.35);
+  --ok: #6cc08c;
+  --warn: #ddb14a;
+  --bad: #e08a83;
 }
 
 /* Talvios accent. Overrides only the two accent tokens, so the warm neutral
@@ -947,6 +954,7 @@ button {
 /* ---------- preview tiles ---------- */
 
 .ptile {
+  position: relative;
   padding: max(7px, 1.185cqw);
   border-radius: max(6px, 0.948cqw);
   background: var(--card);
@@ -959,6 +967,89 @@ button {
   animation: glFade 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
   transition: background 0.45s ease, border-color 0.45s ease;
 }
+/* ---------- the interaction layer ---------- */
+
+/* A mark you can point at. The lift is small on purpose: it has to say "this
+   one" without moving the shape you are reading. */
+.pt-hit { cursor: default; transition: filter 0.12s ease, opacity 0.12s ease; }
+.pt-hit:hover { filter: brightness(1.12) saturate(1.06); }
+.ptile:has(.pt-hit:hover) .pt-hit:not(:hover) { opacity: 0.55; }
+
+.pt-tip {
+  position: absolute;
+  z-index: 5;
+  pointer-events: none;
+  padding: max(3px, 0.42cqw) max(6px, 0.83cqw);
+  border-radius: max(6px, 0.83cqw);
+  background: var(--text);
+  color: var(--bg);
+  font-size: max(9px, 1.185cqw);
+  line-height: 1.35;
+  white-space: nowrap;
+  max-width: 92%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+}
+
+/* Invisible columns over a line chart, so every point has something to point
+   at. A 2px stroke is not a hit target. */
+.pt-linewrap { position: relative; flex: 1; min-height: 0; display: flex; margin-top: auto; }
+.pt-linewrap .pt-line { margin-top: 0; }
+.pt-linehits { position: absolute; inset: 0; display: flex; }
+.pt-linehit { flex: 1; display: block; }
+.pt-linehit:hover { background: color-mix(in srgb, var(--text) 6%, transparent); }
+
+.pt-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: max(3px, 0.42cqw) max(8px, 1.07cqw);
+  margin-top: max(5px, 0.71cqw);
+  flex: none;
+  color: var(--muted);
+  min-width: 0;
+}
+.pt-legend-item { display: flex; align-items: center; gap: max(3px, 0.42cqw); min-width: 0; }
+.pt-legend-item i {
+  width: max(6px, 0.83cqw);
+  height: max(6px, 0.83cqw);
+  border-radius: 2px;
+  flex: none;
+  display: block;
+}
+
+/* ---------- phones ----------
+   Every tile keeps its place in the grid, because the grid is the thing being
+   shown. What goes is the detail that stops fitting at a quarter of a phone
+   screen. */
+@media (max-width: 760px) {
+  /* The share is already the size of the ring at this scale, and it covers the
+     segments it is meant to describe. The ring alone still reads. */
+  .pt-donut > span { display: none; }
+  .pt-donut::before { inset: 30%; }
+  .pt-donut-wrap { padding: max(3px, 0.5cqw) 0; }
+
+  /* A one column tile is about seventy pixels wide on a phone. A legend needs
+     more than that per entry, so it goes and the chart keeps the room. */
+  .ptile-c1 .pt-legend { display: none; }
+  .pt-legend { gap: max(2px, 0.3cqw) max(6px, 0.83cqw); }
+
+  /* The tile height is an inline style, so a plain height cannot reach it.
+     min-height can, and it is what stops a card clipping its own last line
+     once the sparkline moves underneath the number. */
+  .ptile-spark { min-height: 84px; }
+  .ptile-kpi,
+  .ptile-status { min-height: 60px; }
+}
+
+/* Hover is a pointer idea. On a touch screen the tooltip fires on tap, lands
+   under the finger and gets clipped by the tile, so it does not run at all. */
+@media (hover: none) {
+  .pt-tip { display: none; }
+  .ptile:has(.pt-hit:hover) .pt-hit:not(:hover) { opacity: 1; }
+  .pt-hit:hover { filter: none; }
+}
+
 .pt-muted { color: var(--muted); }
 .pt-label { color: var(--text); font-weight: 500; flex: none; }
 .pt-ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -1028,7 +1119,296 @@ button {
 .pt-dot { width: max(4px, 0.592cqw); height: max(4px, 0.592cqw); border-radius: 50%; flex: none; }
 .pt-tag { min-width: max(28px, 4.028cqw); text-align: right; flex: none; }
 
-.pt-rail { display: flex; flex-direction: column; gap: max(5px, 0.829cqw); height: 100%; min-width: 0; }
+/* ---------- the rest of the Power BI visual vocabulary ---------- */
+
+/* Card with its own trend, the shape of the current Power BI card visual. */
+.pt-spark-row {
+  display: flex;
+  align-items: flex-end;
+  gap: max(6px, 0.83cqw);
+  min-width: 0;
+}
+/* Narrow cards have no room beside the number, so the trend goes under it
+   instead of squeezing both. This has to be a viewport query: a container on
+   the tile would re-anchor every cqw inside it to the tile's own width, and
+   all the text in the preview would drop to its floor size. */
+@media (max-width: 760px) {
+  .pt-spark-row { flex-direction: column; align-items: stretch; gap: max(3px, 0.42cqw); }
+  .pt-sparkline { width: 100%; height: max(18px, 2.6cqw); }
+}
+/* Taller and narrower than a full width strip: a sparkline needs amplitude to
+   say anything, and it has to leave the number room to be the loud part. */
+.pt-sparkline { flex: none; width: 46%; min-width: 0; height: max(24px, 3.3cqw); }
+
+.pt-status-row { display: flex; align-items: center; gap: max(4px, 0.53cqw); }
+.pt-status-row i {
+  width: max(5px, 0.71cqw);
+  height: max(5px, 0.71cqw);
+  border-radius: 50%;
+  flex: none;
+  display: block;
+}
+
+/* Ranked bars. The name sits beside the track, not above it, so a league
+   table of five fits the height a chart tile actually has. */
+.pt-hbars {
+  margin-top: max(5px, 0.71cqw);
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: max(3px, 0.47cqw);
+}
+.pt-hbar { display: flex; align-items: center; gap: max(5px, 0.71cqw); min-width: 0; }
+.pt-hbar-name { width: 34%; flex: none; color: var(--muted); }
+.pt-hbar-track { flex: 1; min-width: 0; display: block; }
+.pt-hbar-track i {
+  display: block;
+  height: max(7px, 1.07cqw);
+  border-radius: max(2px, 0.24cqw);
+  min-width: 2px;
+}
+
+/* Stacked columns. The gap between segments is the tile behind showing
+   through, which is what stops two neighbours reading as one block. */
+/* Beats `.pt-bars span`, which is a more specific selector and would otherwise
+   force these back to display block and collapse the segments. */
+.pt-bars .pt-stackcol {
+  flex: 1;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 2px;
+  border-radius: max(2px, 0.355cqw) max(2px, 0.355cqw) 0 0;
+  overflow: hidden;
+}
+.pt-bars .pt-stackcol i { display: block; min-height: 2px; }
+
+/* Columns plus a line on one plot. */
+.pt-combo { position: relative; flex: 1; min-height: 0; display: flex; }
+/* The shared rule pushes bars down with margin-top auto, which in this row
+   context collapses them to nothing. */
+.pt-combo .pt-bars { flex: 1; margin-top: 0; align-self: stretch; }
+.pt-overlay { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+/* Half ring against a target. */
+.pt-gauge-wrap {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: max(2px, 0.35cqw);
+  padding-top: max(4px, 0.6cqw);
+}
+.pt-gauge {
+  width: min(100%, max(64px, 9.5cqw));
+  aspect-ratio: 2 / 1;
+  border-radius: 999px 999px 0 0;
+  position: relative;
+  display: grid;
+  place-items: end center;
+  overflow: hidden;
+}
+.pt-gauge::before {
+  content: "";
+  position: absolute;
+  left: 22%;
+  right: 22%;
+  bottom: 0;
+  top: 44%;
+  border-radius: 999px 999px 0 0;
+  background: var(--card);
+}
+.pt-gauge-value { position: relative; line-height: 1; padding-bottom: max(1px, 0.2cqw); }
+
+/* Treemap. One row is enough at this scale, and the widths carry the shares. */
+.pt-treemap {
+  margin-top: max(5px, 0.71cqw);
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  gap: 2px;
+  border-radius: max(3px, 0.35cqw);
+  overflow: hidden;
+}
+.pt-tm-cell {
+  min-width: 0;
+  display: flex;
+  align-items: flex-start;
+  padding: max(3px, 0.47cqw);
+  color: #fff;
+  overflow: hidden;
+}
+.pt-tm-cell b { font-weight: 500; opacity: 0.92; }
+
+/* Bubbles on two axes. */
+.pt-plot {
+  position: relative;
+  margin-top: max(5px, 0.71cqw);
+  flex: 1;
+  min-height: 0;
+  /* The bubbles are centred on their coordinates, so the plot needs room for
+     the largest radius or they hang past the axes. */
+  padding: max(10px, 1.4cqw) max(14px, 1.9cqw);
+}
+.pt-plot .pt-axis-x,
+.pt-plot .pt-axis-y { z-index: 0; }
+.pt-axis-x { position: absolute; left: 0; right: 0; bottom: max(4px, 0.6cqw); height: 1px; background: var(--line); }
+.pt-axis-y { position: absolute; left: max(4px, 0.6cqw); top: 0; bottom: 0; width: 1px; background: var(--line); }
+.pt-bubble {
+  position: absolute;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  transform: translate(-50%, 50%);
+  opacity: 0.82;
+  display: block;
+}
+
+/* Geography, abstracted to a shape with weighted points on it. */
+.pt-map { position: relative; margin-top: max(5px, 0.71cqw); flex: 1; min-height: 0; }
+.pt-map-shape { position: absolute; inset: 0; width: 100%; height: 100%; }
+.pt-pin {
+  position: absolute;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.85;
+  display: block;
+}
+
+/* Matrix heatmap. Every cell is the same measure, so lightness is the whole
+   encoding and a single hue ramp is the right choice. */
+.pt-matrix {
+  margin-top: max(5px, 0.71cqw);
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.pt-mx-head,
+.pt-mx-row {
+  display: grid;
+  grid-template-columns: 22% repeat(var(--mx-cols, 6), minmax(0, 1fr));
+  gap: 2px;
+  align-items: center;
+  flex: 1;
+  min-height: 0;
+}
+.pt-mx-head { flex: none; }
+.pt-mx-cell { display: block; height: 100%; border-radius: max(2px, 0.24cqw); min-height: max(6px, 0.9cqw); }
+
+/* The bridge between two totals. */
+.pt-waterfall {
+  margin-top: max(5px, 0.71cqw);
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: stretch;
+  gap: max(3px, 0.53cqw);
+}
+.pt-wf-col { position: relative; flex: 1; display: block; }
+.pt-wf-col i {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-radius: max(2px, 0.24cqw);
+  display: block;
+}
+
+/* Slicers. A chip row along the top, or a list down the side. */
+.ptile-slicer,
+.ptile-daterange { justify-content: center; padding-block: max(5px, 0.71cqw); }
+
+.pt-slicer,
+.pt-daterange {
+  display: flex;
+  align-items: center;
+  gap: max(6px, 0.83cqw);
+  min-width: 0;
+  overflow: hidden;
+}
+.pt-slicer-name { flex: none; white-space: nowrap; }
+/* The chips take the space that is left and give it up first, so a long
+   slicer crops from its tail instead of squeezing the label. */
+.pt-slicer-chips {
+  display: flex;
+  align-items: center;
+  gap: max(4px, 0.53cqw);
+  min-width: 0;
+  /* Swipeable rather than truncated, with the last chip fading out so the crop
+     reads as "there is more" instead of "this is broken". */
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  flex: 1;
+  mask-image: linear-gradient(to right, #000 calc(100% - 18px), transparent);
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 18px), transparent);
+}
+.pt-slicer-chips::-webkit-scrollbar { display: none; }
+.pt-chip-btn {
+  appearance: none;
+  font: inherit;
+  cursor: pointer;
+  /* A definite height, or the chip collapses to its two side borders and the
+     row reads as a line of stray pipes. */
+  height: max(17px, 2.25cqw);
+  display: inline-flex;
+  align-items: center;
+  padding: 0 max(7px, 0.95cqw);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  white-space: nowrap;
+  flex: none;
+  color: var(--muted);
+  background: transparent;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+.pt-chip-btn:hover { color: var(--text); border-color: var(--muted); }
+.pt-chip-btn.is-on { color: #fff; }
+:root[data-theme="dark"] .pt-chip-btn.is-on { color: #191919; }
+
+.pt-daterange .pt-dr-track {
+  position: relative;
+  flex: 1;
+  min-width: max(40px, 6cqw);
+  height: max(3px, 0.42cqw);
+  border-radius: 999px;
+  background: var(--line);
+}
+.pt-dr-track i { position: absolute; top: 0; bottom: 0; border-radius: 999px; display: block; }
+.pt-dr-track b {
+  position: absolute;
+  top: 50%;
+  width: max(7px, 0.95cqw);
+  height: max(7px, 0.95cqw);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+}
+
+.pt-rail-head { flex: none; margin-bottom: max(2px, 0.3cqw); }
+.pt-rail-item {
+  appearance: none;
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+  background: transparent;
+  padding: max(4px, 0.53cqw) 0;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  flex: none;
+  width: 100%;
+  transition: color 0.15s ease;
+}
+.pt-rail-item:hover { color: var(--text); }
+.pt-rail-item:last-child { border-bottom: 0; }
+.pt-rail-item.is-on { font-weight: 600; }
+
+.pt-rail { display: flex; flex-direction: column; gap: max(2px, 0.3cqw); height: 100%; min-width: 0; }
 .pt-railline {
   height: max(5px, 0.711cqw);
   border-radius: 999px;
