@@ -8,8 +8,8 @@
           "value": "nosniff"
         },
         {
-          "key": "X-Frame-Options",
-          "value": "SAMEORIGIN"
+          "key": "Content-Security-Policy",
+          "value": "frame-ancestors 'self' https://swagatshandilya.vercel.app http://localhost:4173 http://localhost:5173"
         },
         {
           "key": "Referrer-Policy",
